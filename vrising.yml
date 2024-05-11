@@ -1,0 +1,13 @@
+services:
+  vrising_server:
+    image: azureowl/vrising-dedicated-server:latest
+    container_name: vrising
+    ports:
+      - 27015:27015/udp
+      - 27016:27016/udp
+    volumes:
+      - /path/to/volume:/vrising
+    environment:
+      - UID=1000
+      - GID=1000
+    restart: unless-stopped
