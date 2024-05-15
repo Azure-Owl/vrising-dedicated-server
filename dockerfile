@@ -24,7 +24,8 @@ ADD install.sh /steamcmd/install.sh
 RUN chown -R vrising:vrising /vrising \
     && chown -R vrising:vrising /steamcmd \
     && chown -R vrising:vrising /serverData \
-    && chown -R vrising:vrising /home/vrising/.wine
+    && chown -R vrising:vrising /home/vrising/.wine \
+    && chown -R vrising:vrising /tmp
 
 VOLUME ["/vrising"]
 VOLUME ["/serverData"]
