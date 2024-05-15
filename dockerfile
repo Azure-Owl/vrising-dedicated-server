@@ -4,21 +4,30 @@ ENV UID 1000
 ENV GID 1000
 
 # install dependencies
-RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get autoremove -y
-RUN apt install software-properties-common lib32gcc-s1 libvorbisfile3 wget libstdc++6 -y
+RUN apt update && apt upgrade -y
+RUN apt install wine -y
+RUN apt install xvfb xserver-xorg -y
+RUN apt install apt-utils software-properties-common lib32gcc-s1 wget -y
+RUN dpkg --add-architecture i386 && apt-get update && apt-get install wine32 -y
+RUN apt install winbind winetricks -y
 
 RUN groupadd -g $GID vrising \
     && useradd -u $UID vrising -g vrising
 
 RUN mkdir -p /vrising \
-    && mkdir -p /steamcmd
+    && mkdir -p /steamcmd \
+    && mkdir -p /serverData \
+    && mkdir -p /home/vrising/.wine
 
 ADD install.sh /steamcmd/install.sh
 
 RUN chown -R vrising:vrising /vrising \
-    && chown -R vrising:vrising /steamcmd
+    && chown -R vrising:vrising /steamcmd \
+    && chown -R vrising:vrising /serverData \
+    && chown -R vrising:vrising /home/vrising/.wine
 
-VOLUME ["/starbound"]
+VOLUME ["/vrising"]
+VOLUME ["/serverData"]
 
 USER vrising:vrising
 
@@ -30,7 +39,5 @@ RUN cd /steamcmd \
     && chmod u+x ./steamcmd.sh
 
 RUN chmod u+x /steamcmd/install.sh
-
-RUN touch /steamcmd/installmods.txt
 
 ENTRYPOINT ["steamcmd/install.sh"]

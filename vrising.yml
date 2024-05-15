@@ -1,12 +1,13 @@
 services:
   vrising_server:
-    image: azureowl/vrising-dedicated-server:latest
+    image: azureowl/vrising:latest
     container_name: vrising
     ports:
       - 27015:27015/udp
       - 27016:27016/udp
     volumes:
-      - /path/to/volume:/vrising
+      - /path/to/game/files:/vrising
+      - /path/to/config/files:/serverData
     environment:
       - UID=1000
       - GID=1000

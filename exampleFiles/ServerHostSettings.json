@@ -1,0 +1,28 @@
+﻿{
+  "Name": "DockerTest",
+  "Description": "this is a test description",
+  "Port": 27015,
+  "QueryPort": 27016,
+  "MaxConnectedUsers": 40,
+  "MaxConnectedAdmins": 4,
+  "ServerFps": 60,
+  "SaveName": "vrising",
+  "Password": "",
+  "Secure": true,
+  "ListOnSteam": true,
+  "ListOnEOS": true,
+  "AutoSaveCount": 20,
+  "AutoSaveInterval": 120,
+  "CompressSaveFiles": true,
+  "HideIPAddress": true,
+  "AdminOnlyDebugEvents": true,
+  "DisableDebugEvents": false,
+  "API": {
+    "Enabled": false
+  },
+  "Rcon": {
+    "Enabled": false,
+    "Port": 25575,
+    "Password": ""
+  }
+}
