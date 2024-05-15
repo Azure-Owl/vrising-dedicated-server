@@ -1,4 +1,4 @@
-# AzureOwl/vrising-server
+# AzureOwl/vrising-dedicated-server
 
 Dockerized vrising dedicated server
 
@@ -9,7 +9,7 @@ The preferred way to use this image is docker-compose:
 ```yaml
 services:
   vrising_server:
-    image: azureowl/vrising:latest
+    image: azureowl/vrising-dedicated-server:latest
     container_name: vrising
     ports:
       - 27015:27015/udp

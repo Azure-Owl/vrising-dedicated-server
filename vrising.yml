@@ -1,6 +1,6 @@
 services:
   vrising_server:
-    image: azureowl/vrising:latest
+    image: azureowl/vrising-dedicated-server:latest
     container_name: vrising
     ports:
       - 27015:27015/udp
