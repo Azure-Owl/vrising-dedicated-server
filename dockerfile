@@ -20,6 +20,7 @@ RUN groupadd -g $GID vrising \
 RUN mkdir -p /vrising \
     && mkdir -p /steamcmd \
     && mkdir -p /serverData \
+    && mkdir -p /home/vrising \
     && mkdir -p /home/vrising/.wine
 
 ADD install.sh /steamcmd/install.sh
@@ -27,9 +28,9 @@ ADD install.sh /steamcmd/install.sh
 RUN chown -R vrising:vrising /vrising \
     && chown -R vrising:vrising /steamcmd \
     && chown -R vrising:vrising /serverData \
+    && chown -R vrising:vrising /home/vrising \
     && chown -R vrising:vrising /home/vrising/.wine \
     && chown -R vrising:vrising /tmp
-
 
 VOLUME ["/vrising"]
 VOLUME ["/serverData"]
