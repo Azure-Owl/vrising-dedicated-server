@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 
-ENV UID 1000
-ENV GID 1000
+ARG UID=1000
+ARG GID=1000
 
 RUN dpkg --add-architecture i386 \
     && apt-get update \
@@ -21,7 +21,9 @@ RUN mkdir -p /vrising \
     && mkdir -p /steamcmd \
     && mkdir -p /serverData \
     && mkdir -p /home/vrising \
-    && mkdir -p /home/vrising/.wine
+    && mkdir -p /home/vrising/.wine \
+    && mkdir -p /tmp/.X11-unix \
+    && chmod 1777 /tmp/.X11-unix
 
 ADD install.sh /steamcmd/install.sh
 
@@ -45,4 +47,4 @@ RUN cd /steamcmd \
 
 RUN chmod u+x /steamcmd/install.sh
 
-ENTRYPOINT ["steamcmd/install.sh"]
+ENTRYPOINT ["/steamcmd/install.sh"]
