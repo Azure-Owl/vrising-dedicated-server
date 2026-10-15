@@ -52,7 +52,6 @@ RUN cd /steamcmd \
 
 RUN chmod u+x /steamcmd/install.sh
 
-#Remove 32 bit dlls to save space
 RUN wine reg add 'HKCU\Software\Wine\Drivers' /v Graphics /d null /f \
     && wineserver -w \
     && find /home/vrising/.wine/drive_c/windows/system32 -type f | while read -r f; do \
