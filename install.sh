@@ -16,18 +16,12 @@ fi
 
 cd /vrising
 
-rm -f /tmp/.X0-lock
-Xvfb :0 -screen 0 1024x768x16 -nolisten tcp &
-XVFB_PID=$!
-export DISPLAY=:0
-
 exec 3>&1
-script -qfec "wine64 VRisingServer.exe -persistentDataPath Z:/serverData >&3 2>&1" /dev/null </dev/null &
+script -qfec "wine VRisingServer.exe -persistentDataPath Z:/serverData >&3 2>&1" /dev/null </dev/null &
 SERVER_PID=$!
 
 cleanup() {
     wineserver -k
-    kill "$XVFB_PID" 2>/dev/null
 }
 
 shutdown() {
