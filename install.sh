@@ -1,13 +1,18 @@
 #!/bin/sh
-for attempt in 1 2 3; do
-    /steamcmd/steamcmd.sh \
-        +@sSteamCmdForcePlatformType windows \
-        +force_install_dir /vrising/ \
-        +login anonymous \
-        +app_update 1829350 validate \
-        +quit && break
-    echo "steamcmd failed (attempt $attempt), retrying..."
-done
+if [ "$SKIP_UPDATE" = "true" ] && [ -f /vrising/VRisingServer.exe ]; then
+    echo "SKIP_UPDATE is set, starting the installed server without updating"
+else
+    # steamcmd sometimes fails on its first run (e.g. "Missing configuration"), so retry
+    for attempt in 1 2 3; do
+        /steamcmd/steamcmd.sh \
+            +@sSteamCmdForcePlatformType windows \
+            +force_install_dir /vrising/ \
+            +login anonymous \
+            +app_update 1829350 validate \
+            +quit && break
+        echo "steamcmd failed (attempt $attempt), retrying..."
+    done
+fi
 
 if [ ! -f /vrising/VRisingServer.exe ]; then
     echo "VRisingServer.exe not found after install, exiting"

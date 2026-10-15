@@ -9,8 +9,9 @@ services:
       - /path/to/game/files:/vrising
       - /path/to/config/files:/serverData
     stop_grace_period: 2m
-    # Optional overrides for ServerHostSettings.json, see readme for the full list
+    # Optional settings
     # environment:
+      # - SKIP_UPDATE=false
       # - VR_NAME=My V Rising Server
       # - VR_DESCRIPTION=Role playing server. Be nice.
       # - VR_MAX_USERS=40

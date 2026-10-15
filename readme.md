@@ -55,6 +55,10 @@ After editing these files, restart the container for the changes to take effect.
 
 When the container is stopped, the server is sent a shutdown signal so it can save the world before exiting. `stop_grace_period` gives it time to finish; without it Docker kills the server after 10 seconds.
 
+# Skipping updates
+
+On every start the container updates the server to the latest version. Set `SKIP_UPDATE=true` to start the installed version without checking for updates, for example to wait for mods to update after a patch. Remove it again to update. The installed build is printed in the log at startup.
+
 # Overriding host settings with environment variables
 
 Any setting in `ServerHostSettings.json` can also be set with an environment variable. The V Rising server reads these itself, so no file edits are needed. Environment variables take precedence over the values in `ServerHostSettings.json`, so only set the ones you want to override.
