@@ -97,3 +97,8 @@ Any setting in `ServerHostSettings.json` can also be set with an environment var
 | `VR_RCON_BIND_ADDRESS` | Rcon.BindAddress | text | `10.22.0.8` |
 
 If you change `VR_GAME_PORT`, `VR_QUERY_PORT` or `VR_RCON_PORT`, update the published ports to match. RCON uses TCP; the game and query ports use UDP.
+
+# Versions
+
+- `1.1` / `latest:`  Updated base OS image of the game to better support headless running of the server. Various tweaks to improve     interaction with k8s
+- `1.0:`Updated the image to support the 1.0 release of the game..
