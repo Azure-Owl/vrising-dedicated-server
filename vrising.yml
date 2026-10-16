@@ -8,7 +8,14 @@ services:
     volumes:
       - /path/to/game/files:/vrising
       - /path/to/config/files:/serverData
-    environment:
-      - UID=1000
-      - GID=1000
+    stop_grace_period: 2m
+    # Optional settings
+    # environment:
+      # - SKIP_UPDATE=false
+      # - VR_NAME=My V Rising Server
+      # - VR_DESCRIPTION=Role playing server. Be nice.
+      # - VR_MAX_USERS=40
+      # - VR_PASSWORD=SuperSecret
+      # - VR_PRESET=StandardPvP
+      # - VR_DIFFICULTY_PRESET=Difficulty_Normal
     restart: unless-stopped
