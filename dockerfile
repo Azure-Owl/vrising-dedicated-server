@@ -61,4 +61,7 @@ RUN wine reg add 'HKCU\Software\Wine\Drivers' /v Graphics /d null /f \
 
 ENV WINEDLLOVERRIDES="winedbg.exe=d"
 
+# Silence wine's own debug output, set WINEDEBUG= (empty) to get it back
+ENV WINEDEBUG=-all
+
 ENTRYPOINT ["/steamcmd/install.sh"]
