@@ -4,7 +4,14 @@ ARG UID=1000
 ARG GID=1000
 
 RUN apt-get update \
+    && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends ca-certificates wget \
+    && mkdir -p /tmp/dummy/DEBIAN \
+    && printf 'Package: libasound2-plugins\nVersion: 99.0\nArchitecture: amd64\nMaintainer: none\nDescription: Empty placeholder, audio plugins are not needed\n' \
+        > /tmp/dummy/DEBIAN/control \
+    && dpkg-deb -b /tmp/dummy /tmp/libasound2-plugins.deb \
+    && dpkg -i /tmp/libasound2-plugins.deb \
+    && rm -rf /tmp/dummy /tmp/libasound2-plugins.deb /usr/bin/pebble \
     && mkdir -pm755 /etc/apt/keyrings \
     && wget -O /etc/apt/keyrings/winehq-archive.asc https://dl.winehq.org/wine-builds/winehq.key \
     && printf 'Types: deb\nURIs: https://dl.winehq.org/wine-builds/ubuntu\nSuites: resolute\nComponents: main\nArchitectures: amd64\nSigned-By: /etc/apt/keyrings/winehq-archive.asc\n' \
