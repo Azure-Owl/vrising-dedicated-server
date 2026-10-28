@@ -5,7 +5,8 @@ ARG GID=1000
 
 RUN apt-get update \
     && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends ca-certificates wget \
+    && apt-get install -y --no-install-recommends ca-certificates wget locales \
+    && locale-gen en_US.UTF-8 \
     && mkdir -p /tmp/dummy/DEBIAN \
     && printf 'Package: libasound2-plugins\nVersion: 99.0\nArchitecture: amd64\nMaintainer: none\nDescription: Empty placeholder, audio plugins are not needed\n' \
         > /tmp/dummy/DEBIAN/control \
@@ -31,33 +32,24 @@ RUN userdel -r ubuntu 2>/dev/null || true
 RUN groupadd -g $GID vrising \
     && useradd -u $UID vrising -g vrising
 
-RUN mkdir -p /vrising \
-    && mkdir -p /steamcmd \
-    && mkdir -p /serverData \
-    && mkdir -p /home/vrising \
-    && mkdir -p /home/vrising/.wine
+RUN install -d -o vrising -g vrising \
+        /vrising /steamcmd /serverData /home/vrising /home/vrising/.wine
 
-ADD install.sh /steamcmd/install.sh
-
-RUN chown -R vrising:vrising /vrising \
-    && chown -R vrising:vrising /steamcmd \
-    && chown -R vrising:vrising /serverData \
-    && chown -R vrising:vrising /home/vrising \
-    && chown -R vrising:vrising /home/vrising/.wine \
-    && chown -R vrising:vrising /tmp
+COPY --chown=vrising:vrising --chmod=755 install.sh /steamcmd/install.sh
 
 VOLUME ["/vrising"]
 VOLUME ["/serverData"]
 
 USER vrising:vrising
 
+# Let steamcmd update itself at build time instead of on every container start.
+# Its first run can fail right after self-updating, so try twice.
 RUN cd /steamcmd \
     && wget https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
-    && tar -zxvf steamcmd_linux.tar.gz \
+    && tar -zxf steamcmd_linux.tar.gz \
     && rm steamcmd_linux.tar.gz \
-    && chmod u+x ./steamcmd.sh
-
-RUN chmod u+x /steamcmd/install.sh
+    && chmod u+x ./steamcmd.sh \
+    && { ./steamcmd.sh +quit || ./steamcmd.sh +quit; }
 
 RUN wine reg add 'HKCU\Software\Wine\Drivers' /v Graphics /d null /f \
     && wineserver -w \
@@ -67,6 +59,9 @@ RUN wine reg add 'HKCU\Software\Wine\Drivers' /v Graphics /d null /f \
     done
 
 ENV WINEDLLOVERRIDES="winedbg.exe=d"
+
+# steamcmd asks for this locale and warns when it is missing
+ENV LANG=en_US.UTF-8
 
 # Silence wine's own debug output, set WINEDEBUG= (empty) to get it back
 ENV WINEDEBUG=-all
