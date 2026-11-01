@@ -12,6 +12,7 @@ services:
     # Optional settings
     # environment:
       # - SKIP_UPDATE=false
+      # - VALIDATE=true
       # - VR_NAME=My V Rising Server
       # - VR_DESCRIPTION=Role playing server. Be nice.
       # - VR_MAX_USERS=40

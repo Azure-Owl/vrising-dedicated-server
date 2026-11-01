@@ -2,13 +2,20 @@
 if [ "$SKIP_UPDATE" = "true" ] && [ -f /vrising/VRisingServer.exe ]; then
     echo "SKIP_UPDATE is set, starting the installed server without updating"
 else
+    # validate re-checks every game file, which takes a few minutes on slow storage
+    if [ "$VALIDATE" = "false" ]; then
+        VALIDATE_ARG=""
+    else
+        VALIDATE_ARG="validate"
+    fi
+
     # steamcmd sometimes fails on its first run (e.g. "Missing configuration"), so retry
     for attempt in 1 2 3; do
         /steamcmd/steamcmd.sh \
             +@sSteamCmdForcePlatformType windows \
             +force_install_dir /vrising/ \
             +login anonymous \
-            +app_update 1829350 validate \
+            +app_update 1829350 $VALIDATE_ARG \
             +quit && break
         echo "steamcmd failed (attempt $attempt), retrying..."
     done

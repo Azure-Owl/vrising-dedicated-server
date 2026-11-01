@@ -59,6 +59,8 @@ When the container is stopped, the server is sent a shutdown signal so it can sa
 
 On every start the container updates the server to the latest version. Set `SKIP_UPDATE=true` to start the installed version without checking for updates, for example to wait for mods to update after a patch. Remove it again to update. The installed build is printed in the log at startup.
 
+By default every update also validates all game files against Steam, which repairs missing or corrupted files but can add a few minutes to each start. Set `VALIDATE=false` to only download updates without checking the existing files.
+
 # Overriding host settings with environment variables
 
 Any setting in `ServerHostSettings.json` can also be set with an environment variable. The V Rising server reads these itself, so no file edits are needed. Environment variables take precedence over the values in `ServerHostSettings.json`, so only set the ones you want to override.
